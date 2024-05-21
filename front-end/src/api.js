@@ -45,10 +45,60 @@ export const fetchMyMovies = async () => {
 };
 
 export const deleteMovie = async (movieId) => {
-  const response = await fetch(`http://localhost:3000/my-movies/${movieId}`, {
+  const response = await fetch(`${API_URL}/my-movies/${movieId}`, {
     method: 'DELETE',
   });
   if (!response.ok) {
     throw new Error('Failed to delete movie');
   }
+};
+
+export const createWatchList = async (listName) => {
+  const response = await fetch(`${API_URL}/watchlists`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ name: listName }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to create watchlist');
+  }
+  return response.json();
+};
+
+export const fetchUnwatchedMovies = async () => {
+  const response = await fetch(`${API_URL}/unwatched-movies`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch unwatched movies');
+  }
+  return response.json();
+};
+
+export const addMoviesToWatchList = async (watchlistId, movieIds) => {
+  const response = await fetch(`${API_URL}/watchlists/${watchlistId}/movies`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ movieIds }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to add movies to watchlist');
+  }
+  return response.json();
+};
+
+export const removeMoviesFromWatchList = async (watchlistId, movieIds) => {
+  const response = await fetch(`${API_URL}/watchlists/${watchlistId}/movies`, {
+    method: 'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ movieIds }),
+  });
+  if (!response.ok) {
+    throw new Error('Failed to remove movies from watchlist');
+  }
+  return response.json();
 };

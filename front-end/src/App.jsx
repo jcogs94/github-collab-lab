@@ -1,14 +1,27 @@
 import React, { useState, useEffect } from 'react';
-// import Nav from './components/Nav/nav.jsx'
 import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
 import MyMovies from './components/MyMovies/MyMovies.jsx';
-import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus, deleteMovie } from './api.js';
+import WatchListForm from './components/WatchListForm/WatchListForm.jsx';
+import UnwatchedMovies from './components/UnwatchedMovies/UnwatchedMovies.jsx';
+import {
+  fetchMovies,
+  addToMyMovies,
+  fetchMyMovies,
+  updateWatchedStatus,
+  deleteMovie,
+  createWatchList,
+  fetchUnwatchedMovies,
+  addMoviesToWatchList,
+} from './api.js';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [myMovies, setMyMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [watchlists, setWatchlists] = useState([]);
+  const [selectedMovies, setSelectedMovies] = useState([]);
+  const [unwatchedMovies, setUnwatchedMovies] = useState([]);
 
   useEffect(() => {
     const getMyMovies = async () => {
@@ -20,6 +33,18 @@ const App = () => {
       }
     };
     getMyMovies();
+  }, []);
+
+  useEffect(() => {
+    const getUnwatchedMovies = async () => {
+      try {
+        const unwatchedMoviesData = await fetchUnwatchedMovies();
+        setUnwatchedMovies(unwatchedMoviesData);
+      } catch (err) {
+        setError('Failed to fetch unwatched movies');
+      }
+    };
+    getUnwatchedMovies();
   }, []);
 
   const handleSearch = async (searchQuery) => {
@@ -61,13 +86,57 @@ const App = () => {
     }
   };
 
+  const handleCreateWatchList = async (listName) => {
+    try {
+      const newWatchList = await createWatchList(listName);
+      setWatchlists([...watchlists, newWatchList]);
+    } catch (error) {
+      setError('Failed to create watchlist');
+    }
+  };
+
+  const handleMovieSelect = (movieId) => {
+    const index = selectedMovies.indexOf(movieId);
+    if (index > -1) {
+      setSelectedMovies(selectedMovies.filter((id) => id !== movieId));
+    } else {
+      setSelectedMovies([...selectedMovies, movieId]);
+    }
+  };
+
+  const handleAddMoviesToWatchList = async (watchlistId) => {
+    try {
+      const updatedWatchList = await addMoviesToWatchList(watchlistId, selectedMovies);
+      setWatchlists(
+        watchlists.map((watchlist) =>
+          watchlist._id === watchlistId ? updatedWatchList : watchlist
+        )
+      );
+      setSelectedMovies([]);
+    } catch (error) {
+      setError('Failed to add movies to watchlist');
+    }
+  };
+
   return (
     <div>
       <h1>Movie Database</h1>
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
       <MovieList movies={movies} onAddToMyMovies={handleAddToMyMovies} />
-      <MyMovies movies={myMovies} onUpdateWatchedStatus={handleUpdateWatchedStatus} onDeleteMovie={handleDeleteMovie} />
+      <MyMovies
+        movies={myMovies}
+        onUpdateWatchedStatus={handleUpdateWatchedStatus}
+        onDeleteMovie={handleDeleteMovie}
+      />
+      <WatchListForm onCreateWatchList={handleCreateWatchList} />
+      <UnwatchedMovies
+        movies={unwatchedMovies}
+        selectedMovies={selectedMovies}
+        onMovieSelect={handleMovieSelect}
+        onAddMoviesToWatchList={handleAddMoviesToWatchList}
+        watchlists={watchlists}
+      />
     </div>
   );
 };

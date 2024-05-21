@@ -128,6 +128,64 @@ app.get("/my-movies", async (req, res) => {
     }
 });
 
+// Create a new watchlist
+app.post('/watchlists', async (req, res) => {
+  try {
+    const { name } = req.body;
+    const watchlist = new WatchList({ name });
+    await watchlist.save();
+    res.status(201).json(watchlist);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while creating the watchlist');
+  }
+});
+
+// Get all unwatched movies
+app.get('/unwatched-movies', async (req, res) => {
+  try {
+    const unwatchedMovies = await Movie.find({ watched: false });
+    res.status(200).json(unwatchedMovies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while retrieving unwatched movies');
+  }
+});
+
+// Add movies to a watchlist
+app.post('/watchlists/:id/movies', async (req, res) => {
+  try {
+    const watchlistId = req.params.id;
+    const { movieIds } = req.body;
+    const watchlist = await WatchList.findByIdAndUpdate(
+      watchlistId,
+      { $addToSet: { movies: movieIds } },
+      { new: true }
+    ).populate('movies');
+    res.status(200).json(watchlist);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while adding movies to the watchlist');
+  }
+});
+
+// Remove movies from a watchlist
+app.delete('/watchlists/:id/movies', async (req, res) => {
+  try {
+    const watchlistId = req.params.id;
+    const { movieIds } = req.body;
+    const watchlist = await WatchList.findByIdAndUpdate(
+      watchlistId,
+      { $pull: { movies: { $in: movieIds } } },
+      { new: true }
+    ).populate('movies');
+    res.status(200).json(watchlist);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while removing movies from the watchlist');
+  }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
