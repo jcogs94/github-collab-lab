@@ -1,0 +1,67 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const axios = require('axios');
+const path = require('path');
+const Movie = require('./models/Movie');
+require('dotenv').config();
+
+const app = express();
+const port = process.env.PORT || 3000;
+const mongoUri = process.env.MONGODB_URI;
+const tmdbApiKey = process.env.TMDB_API_KEY;
+const defaultPoster = 'url_to_your_default_image';
+
+// Connect to MongoDB
+mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.log(err));
+
+// Middleware
+app.use(express.json());
+app.use(express.static(path.join(__dirname)));
+
+// Serve HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
+
+// Fetch and Save Movies Endpoint
+app.get('/fetch-movies', async (req, res) => {
+  const searchQuery = req.query.search;
+
+  if (!searchQuery) {
+    return res.status(400).send('Search query is required');
+  }
+
+  const options = {
+    method: 'GET',
+    url: `https://api.themoviedb.org/3/search/movie`,
+    params: {
+      api_key: tmdbApiKey,
+      query: searchQuery
+    }
+  };
+
+  try {
+    const response = await axios.request(options);
+    const movies = response.data.results.map(movie => ({
+      title: movie.title,
+      year: movie.release_date.split('-')[0],
+      poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : defaultPoster
+    }));
+
+    // Save movies to MongoDB
+    await Movie.insertMany(movies);
+
+    // Respond with the movie data
+    res.status(200).json(movies);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while fetching movies');
+  }
+});
+
+// Start the server
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
