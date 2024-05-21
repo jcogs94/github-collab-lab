@@ -7,8 +7,9 @@
 </head>
 
 <body>
-<p>Your #1 Movie Database Source!</p> 
-<Search />
+<p>Your #1 Movie Database!</p> 
+
+
 
 </body>
 </html>
