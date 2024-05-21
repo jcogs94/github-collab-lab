@@ -1,20 +1,9 @@
-<<<<<<< HEAD
-import React, { useState } from 'react';
-import SearchForm from './components/Search/SearchForm.jsx';
-import MovieList from './components/MovieList.jsx';
-import { fetchMovies } from './api.js';
-=======
 import React, { useState, useEffect } from 'react';
 import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
 // import WatchList from './components/WatchList/WatchList.jsx';
 import { fetchMovies, addToWatchList, fetchWatchList } from './api.js';
 import './App.css'
-<<<<<<< HEAD
->>>>>>> 4b4049c71b99270e6dfcde73a294b7a157d28202
-=======
->>>>>>> main
->>>>>>> d152d8d621a6fa4262b9b93234572518173b3272
 
 const App = () => {
   const [movies, setMovies] = useState([]);
