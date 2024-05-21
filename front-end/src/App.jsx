@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchForm from './components/SearchForm.jsx';
 import MovieList from './components/MovieList.jsx';
-import { fetchMovies } from './api.js';
+import WatchList from './components/WatchList.jsx';
+import { fetchMovies, addToWatchList, fetchWatchList } from './api.js';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
+  const [watchList, setWatchList] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const getWatchList = async () => {
+      try {
+        const watchListData = await fetchWatchList();
+        setWatchList(watchListData);
+      } catch (err) {
+        setError('Failed to fetch watch list');
+      }
+    };
+    getWatchList();
+  }, []);
 
   const handleSearch = async (searchQuery) => {
     try {
@@ -18,16 +32,24 @@ const App = () => {
     }
   };
 
+  const handleAddToWatchList = async (movie) => {
+    try {
+      const addedMovie = await addToWatchList(movie);
+      setWatchList([...watchList, addedMovie]);
+    } catch (err) {
+      setError('Failed to add movie to watch list');
+    }
+  };
+
   return (
     <div>
       <h1>Movie Database</h1>
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
-      <MovieList movies={movies} />
+      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
+      <WatchList watchList={watchList} />
     </div>
   );
 };
 
 export default App;
-
-
