@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import SearchForm from './components/SearchForm.jsx';
-import MovieList from './components/MovieList.jsx';
-import WatchList from './components/WatchList.jsx';
+import MovieList from './components/MovieList/MovieList.jsx'
+import SearchForm from './components/SearchForm/SearchForm.jsx';
+// import WatchList from './components/WatchList/WatchList.jsx';
 import { fetchMovies, addToWatchList, fetchWatchList } from './api.js';
+import './App.css'
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -47,7 +48,7 @@ const App = () => {
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
       <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
-      <WatchList watchList={watchList} />
+      {/* <WatchList watchList={watchList} /> */}
     </div>
   );
 };

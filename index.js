@@ -1,10 +1,10 @@
-const express = require("express");
-const mongoose = require("mongoose");
-const axios = require("axios");
-const path = require("path");
-const Movie = require("./models/Movie");
-const WatchList = require("./models/WatchList");
-require("dotenv").config();
+const express = require('express');
+const mongoose = require('mongoose');
+const axios = require('axios');
+const path = require('path');
+const Movie = require('./models/Movie');
+const WatchList = require('./models/WatchList');
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -20,6 +20,12 @@ mongoose
 
 // Middleware
 app.use(express.json());
+app.use(express.static(path.join(__dirname)));
+
+// Serve HTML file
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // Fetch and Save Movies Endpoint
 app.get("/fetch-movies", async (req, res) => {
