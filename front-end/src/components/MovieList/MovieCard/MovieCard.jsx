@@ -1,3 +1,4 @@
+import React from "react"
 import './MovieCard.css'
 
 const MovieCard = ({ title, year, poster }) => {
