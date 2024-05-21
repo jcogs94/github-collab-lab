@@ -8,9 +8,7 @@
 
 <body>
 <p>Your #1 Movie Database!</p> 
-<SearchForm />
-<MovieList />
-<Movie />
+
 
 
 </body>
