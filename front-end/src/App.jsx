@@ -1,12 +1,33 @@
-import { useState } from 'react'
-import './App.css'
+import React, { useState } from 'react';
+import SearchForm from './components/SearchForm.jsx';
+import MovieList from './components/MovieList.jsx';
+import { fetchMovies } from './api.js';
 
-function App() {
+const App = () => {
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  const handleSearch = async (searchQuery) => {
+    try {
+      const movieData = await fetchMovies(searchQuery);
+      setMovies(movieData);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch movies');
+      setMovies([]);
+    }
+  };
+
   return (
-    <>
-      <h1>Test</h1>
-    </>
-  )
-}
+    <div>
+      <h1>Movie Database</h1>
+      <SearchForm onSearch={handleSearch} />
+      {error && <p>{error}</p>}
+      <MovieList movies={movies} />
+    </div>
+  );
+};
 
-export default App
+export default App;
+
+
