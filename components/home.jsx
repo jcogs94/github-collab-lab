@@ -7,8 +7,10 @@
 </head>
 
 <body>
-<p>Your #1 Movie Database Source!</p> 
+<p>Your #1 Movie Database!</p> 
 <Search />
+<MovieList />
+
 
 </body>
 </html>

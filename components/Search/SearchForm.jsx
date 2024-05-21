@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 
-const Search = ({onSearch}) => {
+const SearchForm = ({onSearch}) => {
     const [searchQuery, setSearchQuery] = useState('');
 
     const handleChange = (event) => {
@@ -29,4 +29,4 @@ const Search = ({onSearch}) => {
 
 
 
- export default Search;
+ export default SearchForm;

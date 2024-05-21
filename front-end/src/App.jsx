@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import SearchForm from './components/SearchForm.jsx';
+import SearchForm from './components/Search/SearchForm.jsx';
 import MovieList from './components/MovieList.jsx';
 import { fetchMovies } from './api.js';
 
