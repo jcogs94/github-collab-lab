@@ -43,7 +43,7 @@ const App = () => {
   };
 
   return <>
-    <h1>Movie Database</h1>
+    <h1 id='title'>Movie Database</h1>
     <SearchForm onSearch={handleSearch} />
     {error && <p>{error}</p>}
     <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
