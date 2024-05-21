@@ -4,11 +4,12 @@ import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
 import MyMovies from './components/MyMovies/MyMovies.jsx';
 import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus, deleteMovie } from './api.js';
-
+import HomePage from './components/home.jsx';
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [myMovies, setMyMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState('/');
 
   useEffect(() => {
     const getMyMovies = async () => {
@@ -63,7 +64,19 @@ const App = () => {
 
   return (
     <div>
-      <h1>Movie Database</h1>
+      <nav>
+        <button onClick={() => setPage("./components/Home.jsx")}>Home</button>
+        <button onClick={() => setPage("./components/SearchForm/SearchForm.jsx")}>Search</button>
+        <button onClick={() => setPage("./components/MovieList/MovieList.jsx")}>Watch List</button>
+        <button onClick={() => setPage("./components/MovieCard/MovieCard.jsx")}>A Specific Movie Card</button>
+      </nav>
+      <HomePage 
+      handleAddToWatchList={handleAddToWatchList}
+      error={error}
+      movies={movies}
+      handleSearch={handleSearch}
+      
+      />
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
       <MovieList movies={movies} onAddToMyMovies={handleAddToMyMovies} />

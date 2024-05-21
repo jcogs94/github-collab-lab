@@ -1,16 +1,27 @@
 import React from 'react';
-import './Nav.css';
 
-function Nav() {
+const Nav = () => {
     return (
-        <nav>
-            <ul>
-                <li><a href='./components/Search/SearchForm.jsx'>Search</a></li>
-                <li><a href= './components/MovieList.js'>Movie List</a></li>
-                <li><a href= './components/Movie.js'>A Specific Movie</a></li>
-            </ul>
-        </nav>
-    );
-}
+    <>
+    <nav>
+    <li>
+            <Link to='/'>Home</Link>
+        </li>
+        <li>
+            <Link to='/search'>Search</Link>
+        </li>
+        <li>
+            <Link to='/watchlists'>Watch List</Link>
+        </li>
+        <li>
+            <Link to='/my-movies'>Specific Movies</Link>
+        </li>
+
+
+    </nav>
+    
+    </>
+
+    )};
 
 export default Nav;
