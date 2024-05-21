@@ -102,3 +102,12 @@ export const removeMoviesFromWatchList = async (watchlistId, movieIds) => {
   }
   return response.json();
 };
+
+export const fetchWatchlists = async () => {
+  const response = await fetch('/watchlists');
+  if (!response.ok) {
+    throw new Error('Failed to fetch watchlists');
+  }
+  const watchlists = await response.json();
+  return watchlists;
+};
