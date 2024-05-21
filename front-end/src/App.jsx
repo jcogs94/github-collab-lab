@@ -42,15 +42,13 @@ const App = () => {
     }
   };
 
-  return (
-    <div>
-      <h1>Movie Database</h1>
-      <SearchForm onSearch={handleSearch} />
-      {error && <p>{error}</p>}
-      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
-      {/* <WatchList watchList={watchList} /> */}
-    </div>
-  );
+  return <>
+    <h1>Movie Database</h1>
+    <SearchForm onSearch={handleSearch} />
+    {error && <p>{error}</p>}
+    <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
+    {/* <WatchList watchList={watchList} /> */}
+  </>
 };
 
 export default App;
