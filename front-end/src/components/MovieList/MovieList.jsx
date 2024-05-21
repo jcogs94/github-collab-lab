@@ -4,8 +4,8 @@ import './MovieList.css'
 
 const MovieList = ({ movies }) => {
     return <>
-        <div className="movie-list">
-            <ul>
+        <div id="movie-list-container">
+            <ul id="movie-list">
                 {movies.map( (movie, index) =>
                     <MovieCard key={index} {...movie} />
                 )}
