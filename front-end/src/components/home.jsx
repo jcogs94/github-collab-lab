@@ -1,15 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-</head>
+import React from 'react';
 
-<body>
-<p>Your #1 Movie Database!</p> 
+function HomePage() {
+    return (
+        <>
+        <div>
+            <p>Your Number One Movie Data Base!</p>
+        </div>
+        </>
+    )
+}
 
-
-
-</body>
-</html>
+export default HomePage;
