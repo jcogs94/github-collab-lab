@@ -1,0 +1,15 @@
+#movie-list-container {
+    background-color: #1a1a1a;
+    padding: 20px;
+}
+
+#movie-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: 15px;
+    padding: 0;
+}

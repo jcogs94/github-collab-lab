@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './MovieCard.css';
 
 const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus }) => {
   const [watched, setWatched] = useState(movie.watched);
@@ -36,5 +37,6 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus }) => {
     </div>
   );
 };
+
 
 export default MovieCard;

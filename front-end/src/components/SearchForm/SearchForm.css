@@ -1,0 +1,20 @@
+#search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-left: 35px;
+}
+
+#search-form > label {
+    color: #ff4500;
+}
+
+#search-form > button {
+    align-self: center;
+}
+
+#search-line {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}

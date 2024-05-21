@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
+// import Nav from './components/Nav/nav.jsx'
+import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
-import MovieList from './components/MovieList/MovieList.jsx';
 import MyMovies from './components/MyMovies/MyMovies.jsx';
 import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus } from './api.js';
 
