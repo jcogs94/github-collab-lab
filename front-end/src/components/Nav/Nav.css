@@ -1,0 +1,15 @@
+nav > ul {
+    padding: 20px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+    min-width: 100vw;
+    background-color: #333333;
+    list-style: none;
+}
+
+nav > ul > li > a {
+    text-decoration: none;
+    color: #ff4500;
+}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Nav from './components/Nav/nav.jsx'
 import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
 // import WatchList from './components/WatchList/WatchList.jsx';
@@ -43,6 +44,7 @@ const App = () => {
   };
 
   return <>
+    <Nav />
     <h1 id='title'>Movie Database</h1>
     <SearchForm onSearch={handleSearch} />
     {error && <p>{error}</p>}
