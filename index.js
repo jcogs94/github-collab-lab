@@ -4,6 +4,7 @@ const axios = require('axios');
 const path = require('path');
 const Movie = require('./models/Movie');
 const WatchList = require('./models/WatchList');
+const cors = require('cors')
 require('dotenv').config();
 
 const app = express();
@@ -20,6 +21,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
 // Middleware
 app.use(express.json());
 app.use(express.static(path.join(__dirname)));
+app.use(cors())
 
 // Serve HTML file
 app.get('/', (req, res) => {
