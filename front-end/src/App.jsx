@@ -148,10 +148,20 @@ const App = () => {
             const updatedWatchlist = { ...watchlist };
 
             // Prompt the user for the new watchlist name
-            const newName = prompt(
-                "Enter the new name for the watchlist:",
-                watchlist.name
-            );
+            const newName = () => {
+              return (
+            
+              <WatchlistForm 
+                setListName={setListName}
+                handleSubmit={handleSubmit}
+                onCreateWatchList={onCreateWatchList}
+              />
+              )}
+            
+            // prompt(
+            //     "Enter the new name for the watchlist:",
+            //     watchlist.name
+            // );
 
             if (newName !== null) {
                 // Update the watchlist name
