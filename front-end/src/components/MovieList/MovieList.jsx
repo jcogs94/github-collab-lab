@@ -1,17 +1,14 @@
-import React from "react"
-import MovieCard from "../MovieCard/MovieCard.jsx"
-import './MovieList.css'
+import React from 'react';
+import MovieCard from '../MovieCard/MovieCard.jsx';
 
-const MovieList = ({ movies }) => {
-    return <>
-        <div className="movie-list">
-            <ul>
-                {movies.map( (movie, index) =>
-                    <MovieCard key={index} {...movie} />
-                )}
-            </ul>
-        </div>
-    </>
-}
+const MovieList = ({ movies, onAddToMyMovies }) => {
+  return (
+    <div>
+      {movies.map((movie) => (
+        <MovieCard key={movie._id || movie.imdbID || `${movie.title}-${movie.year}-${Math.random().toString(36).substr(2, 9)}`} movie={movie} onAddToMyMovies={onAddToMyMovies} />
+      ))}
+    </div>
+  );
+};
 
-export default MovieList
+export default MovieList;

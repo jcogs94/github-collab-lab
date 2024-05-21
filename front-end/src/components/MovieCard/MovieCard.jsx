@@ -1,14 +1,40 @@
-import React from "react"
-import './MovieCard.css'
+import React, { useState } from 'react';
 
-const MovieCard = ({ title, year, poster }) => {
-    return <>
-        <li className="movie-card">
-            <h2>{title}</h2>
-            <p>{year}</p>
-            <img src={poster} alt={title} />
-        </li>
-    </>
-}
+const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus }) => {
+  const [watched, setWatched] = useState(movie.watched);
 
-export default MovieCard
+  const toggleWatched = () => {
+    setWatched(!watched);
+    onUpdateWatchedStatus(movie._id, !watched);
+  };
+
+  const handleAddToMyMovies = () => {
+    const movieToAdd = {
+      title: movie.title,
+      year: movie.year,
+      poster: movie.poster,
+      watched: movie.watched
+    };
+    console.log('Button clicked for movie:', movie);
+    onAddToMyMovies(movieToAdd);
+  };
+
+  return (
+    <div className="movie-card">
+      <h2>{movie.title}</h2>
+      <p>Year: {movie.year}</p>
+      <img src={movie.poster} alt={movie.title} />
+      {onUpdateWatchedStatus && (
+        <p>
+          <label>
+            <input type="checkbox" checked={watched} onChange={toggleWatched} />
+            Watched
+          </label>
+        </p>
+      )}
+      {onAddToMyMovies && <button onClick={handleAddToMyMovies}>Add to My Movies</button>}
+    </div>
+  );
+};
+
+export default MovieCard;

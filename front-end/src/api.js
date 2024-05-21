@@ -8,8 +8,8 @@ export const fetchMovies = async (searchQuery) => {
   return response.json();
 };
 
-export const addToWatchList = async (movie) => {
-  const response = await fetch(`${API_URL}/add-to-watchlist`, {
+export const addToMyMovies = async (movie) => {
+  const response = await fetch(`${API_URL}/my-movies`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -17,15 +17,29 @@ export const addToWatchList = async (movie) => {
     body: JSON.stringify(movie)
   });
   if (!response.ok) {
-    throw new Error('Failed to add movie to watch list');
+    throw new Error('Failed to add movie to my movies');
   }
   return response.json();
 };
 
-export const fetchWatchList = async () => {
-  const response = await fetch(`${API_URL}/watchlist`);
+export const updateWatchedStatus = async (id, watched) => {
+  const response = await fetch(`${API_URL}/my-movies/${id}`, {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ watched })
+  });
   if (!response.ok) {
-    throw new Error('Failed to fetch watch list');
+    throw new Error('Failed to update watched status');
+  }
+  return response.json();
+};
+
+export const fetchMyMovies = async () => {
+  const response = await fetch(`${API_URL}/my-movies`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch my movies');
   }
   return response.json();
 };

@@ -1,25 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
-// import WatchList from './components/WatchList/WatchList.jsx';
-import { fetchMovies, addToWatchList, fetchWatchList } from './api.js';
-import './App.css'
+import MovieList from './components/MovieList/MovieList.jsx';
+import MyMovies from './components/MyMovies/MyMovies.jsx';
+import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus } from './api.js';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
-  const [watchList, setWatchList] = useState([]);
+  const [myMovies, setMyMovies] = useState([]);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const getWatchList = async () => {
+    const getMyMovies = async () => {
       try {
-        const watchListData = await fetchWatchList();
-        setWatchList(watchListData);
+        const myMoviesData = await fetchMyMovies();
+        setMyMovies(myMoviesData);
       } catch (err) {
-        setError('Failed to fetch watch list');
+        setError('Failed to fetch my movies');
       }
     };
-    getWatchList();
+    getMyMovies();
   }, []);
 
   const handleSearch = async (searchQuery) => {
@@ -33,12 +32,22 @@ const App = () => {
     }
   };
 
-  const handleAddToWatchList = async (movie) => {
+  const handleAddToMyMovies = async (movie) => {
+    console.log('Adding movie:', movie);
     try {
-      const addedMovie = await addToWatchList(movie);
-      setWatchList([...watchList, addedMovie]);
+      const addedMovie = await addToMyMovies(movie);
+      setMyMovies([...myMovies, addedMovie]);
     } catch (err) {
-      setError('Failed to add movie to watch list');
+      setError('Failed to add movie to my movies');
+    }
+  };
+
+  const handleUpdateWatchedStatus = async (id, watched) => {
+    try {
+      const updatedMovie = await updateWatchedStatus(id, watched);
+      setMyMovies(myMovies.map(movie => movie._id === id ? updatedMovie : movie));
+    } catch (err) {
+      setError('Failed to update watched status');
     }
   };
 
@@ -47,8 +56,8 @@ const App = () => {
       <h1>Movie Database</h1>
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
-      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
-      {/* <WatchList watchList={watchList} /> */}
+      <MovieList movies={movies} onAddToMyMovies={handleAddToMyMovies} />
+      <MyMovies movies={myMovies} onUpdateWatchedStatus={handleUpdateWatchedStatus} />
     </div>
   );
 };
