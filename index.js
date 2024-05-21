@@ -58,6 +58,23 @@ app.get("/fetch-movies", async (req, res) => {
     }
 });
 
+// Delete a movie from the database
+app.delete('/my-movies/:id', async (req, res) => {
+  try {
+    const movieId = req.params.id;
+    const deletedMovie = await Movie.findByIdAndDelete(movieId);
+
+    if (!deletedMovie) {
+      return res.status(404).send('Movie not found');
+    }
+
+    res.status(200).json({ message: 'Movie deleted successfully' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while deleting the movie');
+  }
+});
+
 // Add movie to watch list
 app.post("/my-movies", async (req, res) => {
     const { title, year, poster } = req.body;
