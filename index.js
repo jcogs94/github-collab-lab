@@ -3,13 +3,14 @@ const mongoose = require('mongoose');
 const axios = require('axios');
 const path = require('path');
 const Movie = require('./models/Movie');
+const WatchList = require('./models/WatchList');
 require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 3000;
 const mongoUri = process.env.MONGODB_URI;
 const tmdbApiKey = process.env.TMDB_API_KEY;
-const defaultPoster = 'url_to_your_default_image';
+const defaultPoster = './assets/no-poster.jpg';
 
 // Connect to MongoDB
 mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -46,8 +47,9 @@ app.get('/fetch-movies', async (req, res) => {
     const response = await axios.request(options);
     const movies = response.data.results.map(movie => ({
       title: movie.title,
-      year: movie.release_date.split('-')[0],
-      poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : defaultPoster
+      year: movie.release_date ? movie.release_date.split('-')[0] : 'N/A',
+      poster: movie.poster_path ? `https://image.tmdb.org/t/p/w500${movie.poster_path}` : defaultPoster,
+      watched: false // Default value for the watched field
     }));
 
     // Save movies to MongoDB
@@ -58,6 +60,35 @@ app.get('/fetch-movies', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).send('An error occurred while fetching movies');
+  }
+});
+
+// Add movie to watch list
+app.post('/add-to-watchlist', async (req, res) => {
+  const { title, year, poster } = req.body;
+
+  if (!title || !year || !poster) {
+    return res.status(400).send('Title, year, and poster are required');
+  }
+
+  try {
+    const watchListItem = new WatchList({ title, year, poster, watched: false });
+    await watchListItem.save();
+    res.status(201).json(watchListItem);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while adding the movie to the watch list');
+  }
+});
+
+// Get movies from watch list
+app.get('/watchlist', async (req, res) => {
+  try {
+    const watchList = await WatchList.find();
+    res.status(200).json(watchList);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('An error occurred while retrieving the watch list');
   }
 });
 
