@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import MovieList from './components/MovieList/MovieList.jsx'
 import SearchForm from './components/SearchForm/SearchForm.jsx';
 import MyMovies from './components/MyMovies/MyMovies.jsx';
-import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus } from './api.js';
+import { fetchMovies, addToMyMovies, fetchMyMovies, updateWatchedStatus, deleteMovie } from './api.js';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
@@ -52,13 +52,22 @@ const App = () => {
     }
   };
 
+  const handleDeleteMovie = async (movieId) => {
+    try {
+      await deleteMovie(movieId);
+      setMyMovies(myMovies.filter((movie) => movie._id !== movieId));
+    } catch (error) {
+      setError('Failed to delete movie');
+    }
+  };
+
   return (
     <div>
       <h1>Movie Database</h1>
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
       <MovieList movies={movies} onAddToMyMovies={handleAddToMyMovies} />
-      <MyMovies movies={myMovies} onUpdateWatchedStatus={handleUpdateWatchedStatus} />
+      <MyMovies movies={myMovies} onUpdateWatchedStatus={handleUpdateWatchedStatus} onDeleteMovie={handleDeleteMovie} />
     </div>
   );
 };

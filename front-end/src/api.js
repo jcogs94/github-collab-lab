@@ -43,3 +43,12 @@ export const fetchMyMovies = async () => {
   }
   return response.json();
 };
+
+export const deleteMovie = async (movieId) => {
+  const response = await fetch(`http://localhost:3000/my-movies/${movieId}`, {
+    method: 'DELETE',
+  });
+  if (!response.ok) {
+    throw new Error('Failed to delete movie');
+  }
+};

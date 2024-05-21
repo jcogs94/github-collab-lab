@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './MovieCard.css';
 
-const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus }) => {
+const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus, onDeleteMovie }) => {
   const [watched, setWatched] = useState(movie.watched);
 
   const toggleWatched = () => {
@@ -34,6 +34,8 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus }) => {
         </p>
       )}
       {onAddToMyMovies && <button onClick={handleAddToMyMovies}>Add to My Movies</button>}
+      {onDeleteMovie && <button onClick={() => onDeleteMovie(movie._id)}>Delete</button>}
+      
     </div>
   );
 };
