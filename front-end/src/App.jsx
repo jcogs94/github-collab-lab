@@ -4,11 +4,41 @@ import SearchForm from './components/SearchForm/SearchForm.jsx';
 // import WatchList from './components/WatchList/WatchList.jsx';
 import { fetchMovies, addToWatchList, fetchWatchList } from './api.js';
 import './App.css'
+import HomePage from './components/home.jsx'
+import Nav from './components/Nav/nav.jsx'
+
+
+
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [watchList, setWatchList] = useState([]);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState({HomePage});
+  const fetchAllMovies = async () => {};
+
+  useEffect(() => {
+    const getMyMovies = async () => {
+      try {
+        const myMoviesData = await fetchMyMovies();
+        setMyMovies(myMoviesData);
+      } catch (err) {
+        setError('Failed to fetch my movies');
+      }
+    };
+    getMyMovies();
+  }, []);
+
+  const handleSearch = async (searchQuery) => {
+    try {
+      const movieData = await fetchAllMovies();
+      setMovies(movieData);
+      setError(null);
+    } catch (err) {
+      setError('Failed to fetch movies');
+      setMovies([]);
+    }
+  }
 
   useEffect(() => {
     const getWatchList = async () => {
@@ -20,18 +50,22 @@ const App = () => {
       }
     };
     getWatchList();
-  }, []);
 
-  const handleSearch = async (searchQuery) => {
+  const getMovies = async () => {
     try {
-      const movieData = await fetchMovies(searchQuery);
+      const movieData = await );
       setMovies(movieData);
       setError(null);
     } catch (err) {
       setError('Failed to fetch movies');
-      setMovies([]);
     }
-  };
+  }
+},
+
+[]);
+
+
+  
 
   const handleAddToWatchList = async (movie) => {
     try {
@@ -44,10 +78,21 @@ const App = () => {
 
   return (
     <div>
-      <h1>Movie Database</h1>
+      <Nav />
+      <HomePage 
+      handleSearch={handleSearch}
+      getMovies={getMovies}
+      onAddToWatchList={handleAddToWatchList}
+      error={error}
+      SearchForm={SearchForm}
+      movies={movies}
+      setMovies={setMovies}
+
+      />
+      {/* <h1>Movie Database</h1>
       <SearchForm onSearch={handleSearch} />
       {error && <p>{error}</p>}
-      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
+      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} /> */}
       {/* <WatchList watchList={watchList} /> */}
     </div>
   );

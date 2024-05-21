@@ -1,10 +1,17 @@
 import React from 'react';
+import SearchForm from './SearchForm/SearchForm.jsx';
+import MovieList from './MovieList/MovieList.jsx'
 
-function HomePage() {
+
+function HomePage({ handleSearch, error, movies, handleAddToWatchList }) {
     return (
         <>
         <div>
-            <p>Your Number One Movie Data Base!</p>
+        <h1>Your Number One Movie Data Base!</h1>
+      <SearchForm onSearch={handleSearch} />
+      {error && <p>{error}</p>}
+      <MovieList movies={movies} onAddToWatchList={handleAddToWatchList} />
+      {/* <WatchList watchList={watchList} /> */}
         </div>
         </>
     )

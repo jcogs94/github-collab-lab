@@ -1,16 +1,11 @@
-import './components/Nav/nav.css';
 import React from 'react';
 
-function Nav() {
-    return (
-        <nav>
-            <ul>
-                <li><a href='./components/Search/SearchForm.jsx'>Search</a></li>
-                <li><a href= './components/MovieList.js'>Movie List</a></li>
-                <li><a href= './components/Movie.js'>A Specific Movie</a></li>
-            </ul>
+const Nav = ({ setPage }) =>
+<nav>
+          <button onClick={() => setPage('./components/SearchForm/SearchForm.jsx')}>Search</button>
+          <button onClick={() => setPage('./components/MovieList/MovieList.jsx')}>Watch List</button>
+          <button onClick={() => setPage('./components/MovieCard/MovieCard.jsx')}>A Specific</button>
+          
         </nav>
-    );
-}
 
 export default Nav;
