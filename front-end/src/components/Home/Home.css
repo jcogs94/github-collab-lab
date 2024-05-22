@@ -1,0 +1,20 @@
+#home {
+    display: flex;
+    flex-direction: column;
+    color: #ff4500;
+    padding: 60px 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1.5rem;
+    gap: 40px;
+}
+
+#home > ul {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}

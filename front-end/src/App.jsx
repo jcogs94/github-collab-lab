@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Nav from "./components/Nav/Nav.jsx";
-import Home from "./components/Home.jsx";
+import Home from "./components/Home/Home.jsx";
 import SearchForm from "./components/SearchForm/SearchForm.jsx";
 import MovieList from "./components/MovieList/MovieList.jsx";
 import MyMovies from "./components/MyMovies/MyMovies.jsx";
@@ -19,6 +19,7 @@ import {
 } from "./api.js";
 import { fetchWatchlists } from "./api.js";
 import WatchlistList from "./components/WatchlistList/WatchlistList.jsx";
+import './App.css'
 
 const App = () => {
     const [movies, setMovies] = useState([]);
