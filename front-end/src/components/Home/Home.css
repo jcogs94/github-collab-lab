@@ -10,6 +10,11 @@
     gap: 40px;
 }
 
+.link {
+    text-decoration: none;
+    color: #ff4500;
+}
+
 #home > ul {
     display: flex;
     flex-direction: column;
