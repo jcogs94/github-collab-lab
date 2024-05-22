@@ -1,0 +1,14 @@
+#watchlist-form {
+    align-self: center;
+}
+
+#watchlist-form > input {
+    margin-right: 10px;
+}
+
+#watchlist-form > button {
+    background-color: #ff5733;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+}

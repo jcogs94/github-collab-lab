@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './WatchListForm.css'
 
 const WatchListForm = ({ onCreateWatchList }) => {
   const [listName, setListName] = useState('');
@@ -10,7 +11,7 @@ const WatchListForm = ({ onCreateWatchList }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form id='watchlist-form' onSubmit={handleSubmit}>
       <input
         type="text"
         value={listName}

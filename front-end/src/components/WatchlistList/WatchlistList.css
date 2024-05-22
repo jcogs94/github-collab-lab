@@ -1,0 +1,29 @@
+#watchlists-container {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#watchlists-container > h2 {
+    color: #ff4500;
+}
+
+.watchlist {
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    color: white;
+}
+
+.watchlist > h3 {
+    margin: auto 0;
+}
+
+.watchlist > button {
+    background-color: #333333;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 6px;
+}
