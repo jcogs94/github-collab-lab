@@ -58,6 +58,19 @@ app.get("/fetch-movies", async (req, res) => {
     }
 });
 
+// Add a movie to the user's movies collection
+app.post("/my-movies", async (req, res) => {
+    try {
+        const { title, year, poster, watched } = req.body;
+        const movie = new Movie({ title, year, poster, watched });
+        await movie.save();
+        res.status(201).json(movie);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send("An error occurred while adding the movie");
+    }
+});
+
 // Delete a movie from the database
 app.delete("/my-movies/:id", async (req, res) => {
     try {
@@ -112,7 +125,6 @@ app.delete("/watchlists/:id/movies", async (req, res) => {
       );
   }
 });
-
 
 // Update watched status
 app.patch("/my-movies/:id", async (req, res) => {

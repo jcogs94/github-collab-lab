@@ -23,7 +23,14 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus, onDeleteMovi
   return (
     <div className="movie-card">
       <h2>{movie.title} ({movie.year})</h2>
-      <img src={movie.poster} alt={movie.title} />
+      <img
+        src={movie.poster || '../../assets/noPoster.png'}
+        alt={movie.title}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = '../../assets/noPoster.png';
+        }}
+      />
       {onUpdateWatchedStatus && (
         <p>
           <label>
@@ -34,10 +41,8 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus, onDeleteMovi
       )}
       {onAddToMyMovies && <button onClick={handleAddToMyMovies}>Add to My Movies</button>}
       {onDeleteMovie && <button onClick={() => onDeleteMovie(movie._id)}>Delete</button>}
-      
     </div>
   );
 };
-
 
 export default MovieCard;
