@@ -201,7 +201,7 @@ const App = () => {
 
     return (
         <Router>
-            <div>
+            <>
                 <Nav />
                 <Routes>
                     <Route
@@ -214,7 +214,7 @@ const App = () => {
                         element={
                             <>
                                 <SearchForm onSearch={handleSearch} />
-                                {error && <p>{error}</p>}
+                                {error && <p className="error"><em>{error}</em></p>}
                                 <MovieList
                                     movies={movies}
                                     onAddToMyMovies={handleAddToMyMovies}
@@ -258,7 +258,7 @@ const App = () => {
                         }
                     />
                 </Routes>
-            </div>
+            </>
         </Router>
     );
 };

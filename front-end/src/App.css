@@ -23,3 +23,8 @@ body {
     text-align: center;
     color: #ff4500;
 }
+
+.error {
+    color: #ff4500;
+    margin-left: 35px;
+}

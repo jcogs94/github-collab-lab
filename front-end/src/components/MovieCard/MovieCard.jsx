@@ -22,8 +22,7 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus, onDeleteMovi
 
   return (
     <div className="movie-card">
-      <h2>{movie.title}</h2>
-      <p>Year: {movie.year}</p>
+      <h2>{movie.title} ({movie.year})</h2>
       <img src={movie.poster} alt={movie.title} />
       {onUpdateWatchedStatus && (
         <p>
