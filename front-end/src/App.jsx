@@ -16,10 +16,10 @@ import {
     createWatchList,
     fetchUnwatchedMovies,
     addMoviesToWatchList,
+    fetchWatchlists,
 } from "./api.js";
-import { fetchWatchlists } from "./api.js";
 import WatchlistList from "./components/WatchlistList/WatchlistList.jsx";
-import './App.css'
+import "./App.css";
 
 const App = () => {
     const [movies, setMovies] = useState([]);
@@ -33,6 +33,7 @@ const App = () => {
         const getWatchlists = async () => {
             try {
                 const watchlistsData = await fetchWatchlists();
+                console.log("DEBUG36 Fetched watchlists:", watchlistsData);
                 setWatchlists(watchlistsData);
             } catch (err) {
                 setError("Failed to fetch watchlists");
@@ -145,43 +146,22 @@ const App = () => {
 
     const handleEditWatchlist = async (watchlist) => {
         try {
-            // Create a copy of the watchlist to avoid modifying the original
             const updatedWatchlist = { ...watchlist };
-
-            // Prompt the user for the new watchlist name
-            const newName = () => {
-              return (
-            
-              <WatchlistForm 
-                setListName={setListName}
-                handleSubmit={handleSubmit}
-                onCreateWatchList={onCreateWatchList}
-              />
-              )}
-            
-            // prompt(
-            //     "Enter the new name for the watchlist:",
-            //     watchlist.name
-            // );
-
+            const newName = prompt(
+                "Enter the new name for the watchlist:",
+                watchlist.name
+            );
             if (newName !== null) {
-                // Update the watchlist name
                 updatedWatchlist.name = newName;
-
-                // Make an API call to update the watchlist on the backend
-                const response = await fetch(`/watchlists/${watchlist._id}`, {
-                    method: "PUT",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(updatedWatchlist),
-                });
-
+                const response = await fetch(`http://localhost:3000/watchlists/${watchlist._id}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedWatchlist),
+    });
                 if (response.ok) {
-                    // Fetch the updated watchlist from the backend
                     const updatedWatchlistData = await response.json();
-
-                    // Update the watchlists state with the updated watchlist
                     setWatchlists(
                         watchlists.map((wl) =>
                             wl._id === updatedWatchlistData._id
@@ -195,7 +175,6 @@ const App = () => {
             }
         } catch (error) {
             console.error("Error updating watchlist:", error);
-            // Handle the error, show an error message, etc.
         }
     };
 
@@ -214,7 +193,11 @@ const App = () => {
                         element={
                             <>
                                 <SearchForm onSearch={handleSearch} />
-                                {error && <p className="error"><em>{error}</em></p>}
+                                {error && (
+                                    <p className="error">
+                                        <em>{error}</em>
+                                    </p>
+                                )}
                                 <MovieList
                                     movies={movies}
                                     onAddToMyMovies={handleAddToMyMovies}

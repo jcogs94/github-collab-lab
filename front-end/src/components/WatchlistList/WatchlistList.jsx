@@ -1,7 +1,8 @@
 import React from 'react';
-import './WatchlistList.css'
+import './WatchlistList.css';
 
 const WatchlistList = ({ watchlists, onEditWatchlist }) => {
+  console.log('Watchlists in WatchlistList component:', watchlists);
   return (
     <div id='watchlists-container'>
       <h2>My Watchlists</h2>
