@@ -1,0 +1,38 @@
+.watchlist-edit {
+    background-color: #333333;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    list-style: none;
+    gap: 20px;
+}
+
+.watchlist-edit > h2 {
+    color: #ff4500;
+}
+
+.movies-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.movie-item {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.movie-item > span {
+    color: white;
+}
+
+.watchlist-edit > button {
+    background-color: #ff5733;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+}
