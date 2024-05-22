@@ -27,7 +27,7 @@ const MovieCard = ({ movie, onAddToMyMovies, onUpdateWatchedStatus, onDeleteMovi
       {onUpdateWatchedStatus && (
         <p>
           <label>
-            <input type="checkbox" checked={watched} onChange={toggleWatched} />
+            <input className='checkbox' type="checkbox" checked={watched} onChange={toggleWatched} />
             Watched
           </label>
         </p>

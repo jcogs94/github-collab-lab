@@ -28,6 +28,10 @@
     text-align: center;
 }
 
+.checkbox {
+    margin-right: 5px;
+}
+
 .movie-card > button {
     background-color: #ff5733;
     color: white;
