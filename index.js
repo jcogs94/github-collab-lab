@@ -75,23 +75,44 @@ app.delete("/my-movies/:id", async (req, res) => {
     }
 });
 
-// Add movie to watch list
-app.post("/my-movies", async (req, res) => {
-    const { title, year, poster } = req.body;
-
-    if (!title || !year || !poster) {
-        return res.status(400).send("Title, year, and poster are required");
-    }
-
-    try {
-        const movie = new Movie({ title, year, poster, watched: false });
-        await movie.save();
-        res.status(201).json(movie);
-    } catch (error) {
-        console.error(error);
-        res.status(500).send("An error occurred while adding the movie");
-    }
+// Add movies to a watchlist
+app.post("/watchlists/:id/movies", async (req, res) => {
+  try {
+      const watchlistId = req.params.id;
+      const { movieIds } = req.body;
+      const watchlist = await WatchList.findByIdAndUpdate(
+          watchlistId,
+          { $addToSet: { movies: movieIds } },
+          { new: true }
+      ).populate("movies");
+      res.status(200).json(watchlist);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send(
+          "An error occurred while adding movies to the watchlist"
+      );
+  }
 });
+
+// Remove movies from a watchlist
+app.delete("/watchlists/:id/movies", async (req, res) => {
+  try {
+      const watchlistId = req.params.id;
+      const { movieIds } = req.body;
+      const watchlist = await WatchList.findByIdAndUpdate(
+          watchlistId,
+          { $pull: { movies: { $in: movieIds } } },
+          { new: true }
+      ).populate("movies");
+      res.status(200).json(watchlist);
+  } catch (error) {
+      console.error(error);
+      res.status(500).send(
+          "An error occurred while removing movies from the watchlist"
+      );
+  }
+});
+
 
 // Update watched status
 app.patch("/my-movies/:id", async (req, res) => {

@@ -67,47 +67,51 @@ export const createWatchList = async (listName) => {
   return response.json();
 };
 
+
 export const fetchUnwatchedMovies = async () => {
-  const response = await fetch(`${API_URL}/unwatched-movies`);
+  const response = await fetch('http://localhost:3000/unwatched-movies');
   if (!response.ok) {
-    throw new Error('Failed to fetch unwatched movies');
+      throw new Error('Failed to fetch unwatched movies');
   }
-  return response.json();
+  return await response.json();
 };
 
 export const addMoviesToWatchList = async (watchlistId, movieIds) => {
-  const response = await fetch(`${API_URL}/watchlists/${watchlistId}/movies`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ movieIds }),
+  const response = await fetch(`http://localhost:3000/watchlists/${watchlistId}/movies`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ movieIds })
   });
   if (!response.ok) {
-    throw new Error('Failed to add movies to watchlist');
+      throw new Error('Failed to add movies to watchlist');
   }
-  return response.json();
+  return await response.json();
 };
 
 export const removeMoviesFromWatchList = async (watchlistId, movieIds) => {
-  const response = await fetch(`${API_URL}/watchlists/${watchlistId}/movies`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ movieIds }),
+  const response = await fetch(`http://localhost:3000/watchlists/${watchlistId}/movies`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ movieIds })
   });
   if (!response.ok) {
-    throw new Error('Failed to remove movies from watchlist');
+      throw new Error('Failed to remove movies from watchlist');
   }
-  return response.json();
+  return await response.json();
 };
 
+
+
 export const fetchWatchlists = async () => {
-  const response = await fetch('/watchlists');
-  if (!response.ok) {
-    throw new Error('Failed to fetch watchlists');
+  try {
+      const response = await fetch('http://localhost:3000/watchlists');
+      if (!response.ok) {
+          throw new Error('Failed to fetch watchlists');
+      }
+      const data = await response.json();
+      return data;
+  } catch (error) {
+      console.error(error);
+      throw error;
   }
-  const watchlists = await response.json();
-  return watchlists;
 };

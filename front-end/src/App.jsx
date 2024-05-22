@@ -33,14 +33,15 @@ const App = () => {
         const getWatchlists = async () => {
             try {
                 const watchlistsData = await fetchWatchlists();
-                console.log("DEBUG36 Fetched watchlists:", watchlistsData);
+                console.log('Fetched watchlists:', watchlistsData); // Debugging
                 setWatchlists(watchlistsData);
             } catch (err) {
-                setError("Failed to fetch watchlists");
+                setError('Failed to fetch watchlists');
             }
         };
         getWatchlists();
     }, []);
+    
 
     useEffect(() => {
         const getMyMovies = async () => {
